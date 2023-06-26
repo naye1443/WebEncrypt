@@ -16,15 +16,16 @@ def Encrypt():
     try:
         # Tries to access request of form
         for key in request.form:
-            
+            print(request.form[key])
+
     
-        if(request.form.get('scheme') == 'elgamal'):
-            # use elgamal Encryption scheme
-        elif(request.form.get('scheme') == 'des'):
-            # use des Encryption scheme
+        # if(request.form.get('scheme') == 'elgamal'):
+        #     # use elgamal Encryption scheme
+        # elif(request.form.get('scheme') == 'des'):
+        #     # use des Encryption scheme
 
         # Return success Resposnse
-        return {'status': ' ', 'message': ''}
+        return {'status': 'Good', 'message': 'Message is clear'}
 
     except Exception as ex:
         print(f'Exception occurred: {ex}')
