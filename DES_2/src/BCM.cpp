@@ -3,6 +3,8 @@
 #include <vector>
 #include "BCM.hpp"
 
+#include "Binary.hpp"
+
 /*
 * Input: Plaintxt/Ciphertxt, 64 bit key, encrypt/Decrypt, currentBlock iteration
 * Output: Void
@@ -20,7 +22,7 @@ void BCM::OFB(std::string text, std::string key, char encOrdec, int currBlock){
 		srand(time(NULL));
 		// Makes sure initalization vector is 64 bit block size
 		while(iv.length() < 64)
-			iv += Dec_to_Bin(rand() % 100);
+			iv += Binary::Dec_to_Bin(rand() % 100);
 
 		while(iv.length() > 64)	// while the key length is greater than 64
 			iv.erase(iv.begin());	// gets rid of values at the end of std::string
@@ -42,7 +44,7 @@ void BCM::OFB(std::string text, std::string key, char encOrdec, int currBlock){
 */
 std::string BCM::AuxOFB(std::string text, std::string key, char encOrdec, int currBlock){
 	std::string output = encrypt(text, key, encOrdec);
-	cipherBlock.push_back(xOr(output, PlainBlock[currBlock]));
+	cipherBlock.push_back(Binary::xOr(output, PlainBlock[currBlock]));
 	return output;
 }
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Binary.hpp"
 
 #ifndef _DES_
 #define _DES_
@@ -16,9 +17,9 @@ public:
 
 		std::string txtInBits = "";
 		if(encOrdec == 'E')
-			txtInBits = txttoBits(text);
+			txtInBits = Binary::txttoBits(text);
 		else
-			txtInBits = hex2bin(text);
+			txtInBits = Binary::hex2bin(text);
 
 		Blocks = ceil(txtInBits.length() / (double) 64);
 		std::cout << "There are " << Blocks << " Blocks." << std::endl;
@@ -39,10 +40,6 @@ public:
 
 	}
 
-		std::string shiftbits(std::string bits, int n /* number of shifts*/, char dir);
-
-		std::string xOr(std::string s1, std::string s2);	// does XOR of two std::strings
-
 		std::string expansion_ri(std::string input32bit);	// expansion of 32_bit
 
 		std::string encrypt(std::string plain_txt, std::string key, char encOrdec);	// encrypts plain text
@@ -50,20 +47,6 @@ public:
 		std::vector<std::string> key_sched_des(std::string key, char encOrdec);	// creates subkeys for DES
 
 		std::string F(std::string subkey, std::string right_block);	// is F function for DES
-
-		int bit_to_dec(std::string num);    // converts bits into decimal numbers
-
-		std::string hex2bin(std::string s);	// hexadecimal to bin
-
-		std::string bin2hex(std::string s);	// binary to hexadecimal
-		
-		std::string Dec_to_Bin(int n);		// decimal to binary
-
-		std::string txttoBits(std::string str);	// text char's to binary
-
-		std::string hex2char(std::string hex);	// hexadecimal to strings of characters
-
-		std::string hex2dec(std::string s);
 
 protected:
 		// This is the PC_1 vector
