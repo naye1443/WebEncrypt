@@ -36,3 +36,7 @@ next-env.d.ts
 
 # python virtual enviroment
 venv
+
+bin/*.o
+
+DES

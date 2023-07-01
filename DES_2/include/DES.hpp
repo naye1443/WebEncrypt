@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 
-
 #ifndef _DES_
 #define _DES_
 
@@ -11,6 +10,34 @@ class DES{
 public:
 
 		DES(){};	// default constructor
+
+		// Constructor that sets Blocks and estimated number of blocks
+		DES(std::string text, char encOrdec){
+
+			std::string txtInBits = "";
+			if(encOrdec == 'E')
+				txtInBits = txttoBits(text);
+			else
+				txtInBits = hex2bin(text);
+
+			Blocks = ceil(txtInBits.length() / (double) 64);
+			std::cout << "There are " << Blocks << " Blocks." << std::endl;
+
+			int start = 0;
+			for(int i = 0; i < Blocks; i++){
+				PlainBlock.push_back(txtInBits.substr(start, 64));
+				start += 64;
+			}
+			
+			// Take remaining bits and append to final block
+			int rembits = txtInBits.length() % 64;
+			int needbits = 64 - rembits;
+			std::cout << "Need " << needbits << " to fill the rest of Block" << std::endl;
+
+			if(needbits != 64)
+				PlainBlock[Blocks - 1] += std::string(needbits, '0');
+
+		}
 
 		std::string shiftbits(std::string bits, int n /* number of shifts*/, char dir);
 
@@ -40,7 +67,11 @@ public:
 
 		void OFB(std::string text, std::string key, char encOrdec, int currBlock);
 
-		friend std::string AuxOFB(std::string text, std::string key, char encOrder, int currBlock);
+		std::string AuxOFB(std::string text, std::string key, char encOrder, int currBlock);
+
+		std::string comtxt(char encOrdec);
+
+
 private:
 		// This is the PC_1 vector
 	const int pc_1[56] = {  57 ,49 ,41 ,33 ,25 ,17 ,9  ,
@@ -159,10 +190,10 @@ private:
 							33 ,1  ,41 ,9  ,49 ,17 ,57 ,25 };
 
 	// Holds Block of ciphertext
-	std::string cipherBlock;
+	std::vector<std::string> cipherBlock;
 
 	// Holds Block of plaintext
-	std::string PlainBlock;
+	std::vector<std::string> PlainBlock;
 
 	// Blocks needed to create
 	int Blocks;

@@ -318,12 +318,9 @@ std::string DES::Dec_to_Bin(int n)
 
 string DES::txttoBits(string str)
 {
-	
 	string bin = "";
 	for (size_t i = 0; i < str.size(); ++i)
-    {
 		bin += bitset<8>(str.c_str()[i]).to_string();
-    }
 
 	return bin;
 }
@@ -352,32 +349,63 @@ string DES::hex2char(string hex){
 	return valuestring;
 }
 
+/*
+* Input: Plaintxt/Ciphertxt, 64 bit key, encrypt/Decrypt, currentBlock iteration
+* Output: Void
+* Description: 1st iteration takes 64 bit Initalization vector. iterations greater than 1
+* Takes Encryption of previous block. The ciphertxt is created from XOR operation from output
+* of encryption and Block 1 of Plaintxt.
+*/
 void DES::OFB(std::string text, std::string key, char encOrdec, int currBlock){
 	string output;
 
-	if(currBlock == 1){
+	// If first iteration
+	if(currBlock == 0){
 		string iv = "";
 
 		srand(time(NULL));
 		// Makes sure initalization vector is 64 bit block size
-		while(iv.length() < 64){
-			iv += prac.Dec_to_Bin(rand() % 100);	
-		}
+		while(iv.length() < 64)
+			iv += Dec_to_Bin(rand() % 100);
 
 		while(iv.length() > 64)	// while the key length is greater than 64
 			iv.erase(iv.begin());	// gets rid of values at the end of string
 
 		output = AuxOFB(iv, key, encOrdec, currBlock);
-		OFB(output, key, encOrdec, currBlock++);
+		OFB(output, key, encOrdec, ++currBlock);
 	}else if(currBlock < Blocks){
 		output = AuxOFB(text, key, encOrdec, currBlock);
-		OFB(output, key, encOrdec, currBlock++);
+		OFB(output, key, encOrdec, ++currBlock);
 	}
 	return;
 }
 
-string AuxOFB(std::string text, std::string key, char encOrder, int currBlock){
-	output = encrypt(text, key, encOrdec)
-	cipherBlock[currBlock] = xOr(output, PlainBlock[currBlock]);
+/*
+* Input: Either IV or previous encryption block, encryption key, encrypt/decrypt, current Plaintxt/ciphertxt block.
+* Output: Encryption output.
+* Description: Takes IV or previous encryption block and perform encryption/decryption.
+* After push the output of encryption into cipherblock vector.
+*/
+std::string DES::AuxOFB(std::string text, std::string key, char encOrdec, int currBlock){
+	std::string output = encrypt(text, key, encOrdec);
+	cipherBlock.push_back(xOr(output, PlainBlock[currBlock]));
 	return output;
+}
+
+/*
+* Input: Encryption/Decryption.
+* Output: Combined ciphertxt blocks.
+* Description: Combines all ciphertxt blocks.
+*/
+std::string DES::comtxt(char encOrdec){
+	std::string text = "";
+
+	for(int i = 0; i < cipherBlock.size(); i++)
+		text += cipherBlock[i];
+
+	// Clears PlainBlocks/CipherBlocks and Block numbers
+	PlainBlock.clear();
+	cipherBlock.clear();
+	Blocks = 0;
+	return text;
 }
