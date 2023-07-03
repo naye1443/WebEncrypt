@@ -1,6 +1,8 @@
 from flask import Flask, redirect, request, send_file, jsonify, render_template, abort
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def home():
@@ -17,7 +19,6 @@ def Encrypt():
         # Tries to access request of form
         for key in request.form:
             print(request.form[key])
-
     
         # if(request.form.get('scheme') == 'elgamal'):
         #     # use elgamal Encryption scheme
@@ -31,7 +32,5 @@ def Encrypt():
         print(f'Exception occurred: {ex}')
 
         return {'status': 'error', 'message': str(ex)}
-
-
 
 app.run(debug=True, host='127.0.0.1', port='5000')
