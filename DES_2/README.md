@@ -26,3 +26,4 @@ In the terminal with the folder DES_2 being the current working directory, the p
 Make sure you have Clang. If you don't hav clang you can use g++ compiler instead and just change the "-stdlib=libc++" to "-stdlib=c++17".
 
 Or you can just use GNU make.
+
