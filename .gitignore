@@ -40,3 +40,10 @@ venv
 bin/*.o
 
 DES
+
+3pointer.txt
+
+# build files
+*.so
+Binary.egg-info
+build

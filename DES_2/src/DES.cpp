@@ -6,7 +6,6 @@
 #include <bitset>
 #include <math.h>
 #include <time.h>
-
 #include "Binary.hpp"
 
 using namespace std;

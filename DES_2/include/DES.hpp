@@ -56,18 +56,16 @@ public:
 		const int* get_IPt(void){return IP_t;}
 		const int* get_Et(void){return E_t;}
 
-		const int*** get_S(void){
+		std::vector<std::vector<std::vector<int>>> get_S(void){
 
 			int numOfBoxes = sizeof(S)/sizeof(S[0]);	// number of S boxes = 8
 			int rowOfPerm = sizeof(S[0])/sizeof(S[0][0]);	// rows of permutations = 4
 			int colOfPrem = sizeof(S[0][0])/sizeof(S[0][0][0]);	// columns of permutations = 16
 
-			int*** arr = new int** [sizeof(S)/sizeof(S[0])];	// pointer that points to a pointer of an array of integers. Adds 8 "boxes" to Sbox container
+			std::vector<std::vector<std::vector<int>>> arr;
 
 			for(int i = 0; i < numOfBoxes; i++){	
-				arr[i] = new int* [rowOfPerm]; // Pointer that points to "boxes" equals a pointer that points to 4 arrays of integers
 				for(int j = 0; j < rowOfPerm; j++){
-					arr[i][j] = new int[colOfPrem];	// row pointer that points to 4 arrays of integers equals a array of 16 integers
 					for(int k = 0; k < colOfPrem; k++)
 						arr[i][j][k] = S[i][j][k];	// then fill new array with original permutations
 				}
@@ -82,8 +80,13 @@ public:
 		const std::vector<std::string> getplainBlock(void){return PlainBlock;}
 		const int getBlocks(void){return Blocks;}
 
+		void set_cipherBlock(std::vector<std::string> cipherBlock){this->cipherBlock = cipherBlock;}
+		void set_plainBlock(std::vector<std::string> PlainBlock){this->PlainBlock = PlainBlock;}
+		void set_Blocks(int* Blocks){this->Blocks = *Blocks;}
 
-protected:
+
+// Usually is protected but needed to create pybindings
+// protected:
 		// This is the PC_1 vector
 	const int pc_1[56] = {  57 ,49 ,41 ,33 ,25 ,17 ,9  ,
 							1  ,58 ,50 ,42 ,34 ,26 ,18 ,

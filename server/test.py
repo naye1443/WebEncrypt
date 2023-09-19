@@ -1,28 +1,35 @@
-#import DES
+import DES
 import Binary
-import random
+import BCM
+from random import random
 
-print(Binary.bit_to_dec("0110"))
 
+des = DES.DES("This is a test doc", 'E')
 
-# des = DES("This is a test doc")
+# Initalize key
+key = ''
+while(len(key) < 64):
+    key += Binary.Dec_to_Bin(int(random()) % 100)
 
-# key = ''
-# while(len(key) < 64):
-#     key += Binary.dec_to_bin(random() % 100)
+while(len(key) > 64):
+    key = key[:len(key) - 1]
 
-# while(len(key) > 64):
-#     key = key[:len(key) - 1]
+# initalize Block Mode
+ofb = BCM.BCM("This is a test doc", 'E')
 
-# des.OFB("This is a test doc", key, 'E')
-# ciphertxt = Binary.bin2hex(des.comtxt('E'))
+# Compute Block mode into ciphertxt
+ofb.OFB("This is a test doc", key, 'E', 0)
+ciphertxt = Binary.bin2hex(ofb.comtxt('E'))
 
-# print(f"The encrypted value is {ciphertxt}")
+print(f"The encrypted value is {ciphertxt}")
 
-# desdcrypt = DES(ciphertxt)
+# Initalize new Block Mode
+desdcrypt = BCM.BCM(ciphertxt, 'D')
 
-# desdcrypt.OFB(ciphertxt, key, 'D', 0)
+# Compute Block mode into plaintxt
+desdcrypt.OFB(ciphertxt, key, 'D', 0)
 
-# plaintxt = Binary.hex2bin(Binary.bin2hex(desdcrypt.comtxt('D')));
+# Convert binary into characters for comprehension
+plaintxt = Binary.hex2char(Binary.bin2hex(desdcrypt.comtxt('D')));
 
-# print(f"The Decrypted value is{plaintxt}")
+print(f"The Decrypted value is {plaintxt}")
