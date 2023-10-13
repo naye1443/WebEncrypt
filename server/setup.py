@@ -7,11 +7,11 @@ files = ['../DES_2/src/Binary.cpp', '../DES_2/src/BinaryWrap.cpp', '../DES_2/src
 
 abs_filepath = []
 
+# for each files, resolve the absolute file path and append to list
 for file in files:
     file_path_obj = Path(file)
     abs_filepath.append(str(file_path_obj.resolve()))
 
-# Change directory accordingly
 Binary = Pybind11Extension(
     'Binary',
     sources=[abs_filepath[0],abs_filepath[1]],

@@ -6,10 +6,13 @@ from random import random
 
 des = DES.DES("This is a test doc", 'E')
 
+for i in range(1,1000):
+    print(int(round(random(), 0)))
+
 # Initalize key
 key = ''
 while(len(key) < 64):
-    key += Binary.Dec_to_Bin(int(random()) % 100)
+    key += Binary.Dec_to_Bin(int(round(random(), 0)))
 
 while(len(key) > 64):
     key = key[:len(key) - 1]

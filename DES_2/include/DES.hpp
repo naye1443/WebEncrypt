@@ -48,14 +48,6 @@ public:
 
 		std::string F(std::string subkey, std::string right_block);	// is F function for DES
 
-		//** Getter and Setters for python Bindings
-		const int* get_pc1(void){return pc_1;}
-		int* get_numleftShift(void){return num_leftShift;}
-		int* get_numrightShift(void){return num_rightShift;}
-		const int* get_pc2(void){return pc_2;}
-		const int* get_IPt(void){return IP_t;}
-		const int* get_Et(void){return E_t;}
-
 		std::vector<std::vector<std::vector<int>>> get_S(void){
 
 			int numOfBoxes = sizeof(S)/sizeof(S[0]);	// number of S boxes = 8
@@ -73,16 +65,6 @@ public:
 
 			return arr;
 		}
-
-		const int* get_P(void){return P;}
-		const int* get_P1(void){return P_1;}
-		const std::vector<std::string> getCipBlock(void){return cipherBlock;}
-		const std::vector<std::string> getplainBlock(void){return PlainBlock;}
-		const int getBlocks(void){return Blocks;}
-
-		void set_cipherBlock(std::vector<std::string> cipherBlock){this->cipherBlock = cipherBlock;}
-		void set_plainBlock(std::vector<std::string> PlainBlock){this->PlainBlock = PlainBlock;}
-		void set_Blocks(int* Blocks){this->Blocks = *Blocks;}
 
 
 // Usually is protected but needed to create pybindings

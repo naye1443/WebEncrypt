@@ -27,11 +27,11 @@ void BCM::OFB(std::string text, std::string key, char encOrdec, int currBlock){
 		while(iv.length() > 64)	// while the key length is greater than 64
 			iv.erase(iv.begin());	// gets rid of values at the end of std::string
 
-		output = AuxOFB(iv, key, encOrdec, currBlock);
-		OFB(output, key, encOrdec, ++currBlock);
+		output = AuxOFB(iv, this->key, encOrdec, currBlock);
+		OFB(output, this->key, encOrdec, ++currBlock);
 	}else if(currBlock < Blocks){
-		output = AuxOFB(text, key, encOrdec, currBlock);
-		OFB(output, key, encOrdec, ++currBlock);
+		output = AuxOFB(text, this->key, encOrdec, currBlock);
+		OFB(output, this->key, encOrdec, ++currBlock);
 	}
 	return;
 }
