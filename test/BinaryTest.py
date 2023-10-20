@@ -21,14 +21,20 @@ class TestBinary(unittest.TestCase):
     def test_xOr(self):
 
         for keys in self.xOr:
-            with self.subTest(str1=self.xOr[keys][0], str2=self.xOr[keys][1], str3=self.xOr[keys][2]):
+            with self.subTest():
                 self.assertEqual(Binary.xOr(self.xOr[keys][0], self.xOr[keys][1]), self.xOr[keys][2])
 
     def test_hex2bin(self):
         self.assertEqual(Binary.hex2bin("AB0998"), "101010110000100110011000")
 
     def test_bin2hex(self):
-        self.assertEquals(Binary.bin2hex("10101101"), "AD")
+        self.assertEqual(Binary.bin2hex("10101101"), "AD")
+
+    def test_Dec_to_Bin(self):
+        self.assertEqual(Binary.Dec_to_Bin(10), "1010")
+
+    def test_txttoBits(self):
+        self.assertEqual(Binary.txttoBits("ab"), "0110000101100010")
 
         
         
