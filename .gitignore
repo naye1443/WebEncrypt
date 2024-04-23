@@ -37,8 +37,10 @@ next-env.d.ts
 # python virtual enviroment
 venv
 
+# Ignore all object files
 bin/*.o
 
+# Ignore all DES files that
 DES
 
 3pointer.txt
@@ -47,3 +49,7 @@ DES
 *.so
 Binary.egg-info
 build
+*.egg-info
+*.egg
+
+
